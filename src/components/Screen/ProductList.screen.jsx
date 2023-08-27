@@ -1,29 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { productList } from "../../assets/productList";
-import Category from "../Category.component";
 import ProductCard from "../ProductCard.component";
 
 const ProductList = () => {
   const { title } = useParams();
   const [object, setObject] = useState([]);
+  const [discription, setDiscription] = useState("");
   useEffect(() => {
     productList.forEach((element) => {
       if (element.title === title) {
         setObject(element.products);
+        setDiscription(element.discription);
+        console.log(element);
       }
     });
   }, []);
 
-  // console.log(object);
-  return (
-    <div className="flex flex-wrap flex-row">
-        {
-          object.map((obj)=>{
-            return <ProductCard key={obj.id} products={obj}/>
-          })  
-        }
-    </div>
+ 
+  return (<>
+  
+    <div className="ml-8 my-5">
+      <h1 className="text-4xl font-semibold">{title}</h1>
+      <h1 className=" my-2">{discription}</h1>
+          </div>
+      <div className="flex flex-wrap flex-row">
+        {object.map((obj) => {
+            return <ProductCard key={obj.id} products={obj} />;
+        })}
+      </div>
+        </>
   );
 };
 

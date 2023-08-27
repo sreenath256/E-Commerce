@@ -9,6 +9,9 @@ export default {
       spacing:{
         'banner-size' : '45rem'
       },
+      fontFamily:{
+        SpaceMono:['Space Mono']
+      }
       
     },
   },

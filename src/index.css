@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-html{
+html {
   scroll-behavior: smooth;
 }
+
+body {
+  font-family: "Mukta", sans-serif;
+  font-weight: 600;
+}
+

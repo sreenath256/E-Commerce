@@ -2,6 +2,7 @@ export const productList = [
   {
     id: 1,
     title: "Electronics",
+    discription:"Shop home entertainment, TVs, home audio, headphones, cameras, accessories and more",
     url: "https://m.media-amazon.com/images/I/71ud68+jS-L._AC_UY327_FMwebp_QL65_.jpg",
     products: [
       {
@@ -135,6 +136,8 @@ export const productList = [
   {
     id: 1,
     title: "Toys Under ₹500",
+    discription:"Shop home entertainment, TVs, home audio, headphones, cameras, accessories and more",
+
     url: "https://images-na.ssl-images-amazon.com/images/G/01/US-hq/2022/img/Amazon_Exports/XCM_CUTTLE_1469244_2584128_758x608_2X_en_US._SY608_CB609318944_.jpg",
     products: [
       {

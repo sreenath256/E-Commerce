@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Category from "../Category.component";
 import Banner from "../Banner.component";
 import { categories } from "../../assets/categoryList";
 
 const Home = () => {
+
+  
+
   return (
     <div>
+      
       <Banner />
 
       <div
