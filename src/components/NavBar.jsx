@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {
   createUserDocumentFromAuth,
   signInWithGooglePopup,
-} from "../utils/FireBase/fireBase";
+} from "../utils/FireBase/firebase";
 
 const NavBar = () => {
   const handleClick = (e) => {
