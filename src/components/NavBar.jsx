@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { createUserDocumentFromAuth, signInWithGooglePopup } from "../utils/FireBase/fireBase";
+import {
+  createUserDocumentFromAuth,
+  signInWithGooglePopup,
+} from "../utils/FireBase/fireBase";
 
 const NavBar = () => {
   const handleClick = (e) => {
@@ -11,7 +14,7 @@ const NavBar = () => {
 
   const logGoogleUser = async () => {
     const response = await signInWithGooglePopup();
-    createUserDocumentFromAuth(response.user)
+    const userDocRef = await createUserDocumentFromAuth(response.user);
   };
   return (
     <div
