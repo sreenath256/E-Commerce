@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Category from "../Category.component";
 import Banner from "../Banner.component";
 import { categories } from "../../assets/categoryList";
+import NavBar from './../NavBar';
 
 const Home = () => {
 
@@ -9,6 +10,9 @@ const Home = () => {
 
   return (
     <div>
+      <div className="pb-14">
+          <NavBar />
+        </div>
       
       <Banner />
 

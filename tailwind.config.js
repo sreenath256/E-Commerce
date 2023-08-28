@@ -3,6 +3,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/tw-elements/dist/js/**/*.js"
   ],
   theme: {
     extend: {
@@ -15,5 +16,6 @@ export default {
       
     },
   },
-  plugins: [],
+  darkMode: "class",
+  plugins: [require("tw-elements/dist/plugin.cjs")],
 }

@@ -1,16 +1,20 @@
-import { React, Suspense, useState } from "react";
+import { React, Suspense, useEffect, useState } from "react";
 import Home from "./components/Screen/Home.screen";
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import ProductList from "./components/Screen/ProductList.screen";
-import NavBar from "./components/NavBar";
 import { BarLoader } from "react-spinners";
+import Authentication from "./components/Screen/Authentication.screen";
 
 const App = () => {
   const [loading,setLoading]=useState(true)
   
    setTimeout(() => {
     setLoading(false)
-  }, 2000);
+  }, 1000);
+  const navigate=useNavigate();
+
+  useEffect(()=>{
+  })
   return (
     <div>
       <Suspense
@@ -27,12 +31,12 @@ const App = () => {
         :
         <div>
 
-        <div className="pb-14">
-          <NavBar />
-        </div>
+        
         <Routes>
-          <Route exact path="/" element={<Home />}></Route>
+          
+          <Route exact path="/home" element={<Home />}></Route>
           <Route exact path="category/:title" element={<ProductList />}></Route>
+          <Route exact path="/" element={<Authentication/>}></Route>
         </Routes>
         </div>
         }

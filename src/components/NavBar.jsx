@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  
   createUserDocumentFromAuth,
   signInWithGooglePopup,
 } from "../utils/FireBase/firebase";
@@ -12,9 +13,10 @@ const NavBar = () => {
     }, 1000);
   };
 
-  const logGoogleUser = async () => {
+  const logGooglePopup = async () => {
     const response = await signInWithGooglePopup();
-    const userDocRef = await createUserDocumentFromAuth(response.user);
+    
+    const userDocRef= await createUserDocumentFromAuth(response.user)
   };
   return (
     <div
@@ -32,7 +34,7 @@ const NavBar = () => {
         className="w-1/2 h-10 rounded-md outline-yellow-300 pl-4"
         placeholder="Search your items..."
       />
-      <button onClick={logGoogleUser}>Sign In with Google</button>
+      <button onClick={logGooglePopup}>Sign In with Google</button>
       <div className="flex w-40 pr-4 text-xl font-SpaceMono justify-between items-center">
         <h1>Account</h1>
         <h1 onClick={handleClick}>

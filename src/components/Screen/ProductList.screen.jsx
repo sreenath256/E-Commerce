@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { productList } from "../../assets/productList";
 import ProductCard from "../ProductCard.component";
+import NavBar from './../NavBar';
 
 const ProductList = () => {
   const { title } = useParams();
@@ -19,6 +20,9 @@ const ProductList = () => {
 
  
   return (<>
+  <div className="pb-14">
+          <NavBar />
+        </div>
   
     <div className="ml-8 my-5">
       <h1 className="text-4xl font-semibold">{title}</h1>
