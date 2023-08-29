@@ -11,10 +11,14 @@ const Authentication =() =>{
       return;
     }
   };
+
+ 
   const containerClass =
     "container " + (type === "signUp" ? "right-panel-active" : "");
   return (
-    <div className="Appmain">
+    <div className=" flex justify-center" style={{width:'550px'}}>
+
+    <div className="Appmain h-screen flex justify-center flex-col items-center ">
       <h2>Sign in/up Form</h2>
       <div className={containerClass} id="container">
         <SignUpForm />
@@ -30,7 +34,7 @@ const Authentication =() =>{
                 className="ghost"
                 id="signIn"
                 onClick={() => handleOnClick("signIn")}
-              >
+                >
                 Sign In
               </button>
             </div>
@@ -41,7 +45,7 @@ const Authentication =() =>{
                 className="ghost "
                 id="signUp"
                 onClick={() => handleOnClick("signUp")}
-              >
+                >
                 Sign Up
               </button>
             </div>
@@ -49,6 +53,7 @@ const Authentication =() =>{
         </div>
       </div>
     </div>
+                </div>
   );
 }
 

@@ -34,9 +34,9 @@ const App = () => {
         
         <Routes>
           
-          <Route exact path="/home" element={<Home />}></Route>
-          <Route exact path="category/:title" element={<ProductList />}></Route>
           <Route exact path="/" element={<Authentication/>}></Route>
+          <Route exact path="/home" element={<Home />}></Route>
+          <Route exact path="/home/category/:title" element={<ProductList />}></Route>
         </Routes>
         </div>
         }

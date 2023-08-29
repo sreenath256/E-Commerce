@@ -1,4 +1,5 @@
 import React from "react";
+import { createUserDocumentFromAuth, signInWithGooglePopup } from "../utils/FireBase/firebase";
 function SignUpForm() {
   const [state, setState] = React.useState({
     name: "",
@@ -11,6 +12,12 @@ function SignUpForm() {
       ...state,
       [evt.target.name]: value
     });
+  };
+
+  const logGooglePopup = async () => {
+    const response = await signInWithGooglePopup();
+
+    const userDocRef = await createUserDocumentFromAuth(response.user);
   };
 
   const handleOnSubmit = evt => {
@@ -29,20 +36,17 @@ function SignUpForm() {
     }
   };
 
+
   return (
     <div className="form-container sign-up-container">
       <form onSubmit={handleOnSubmit}>
         <h1>Create Account</h1>
         <div className="social-container">
-          <a href="#" className="social">
-            <i className="fab fa-facebook-f" />
-          </a>
-          <a href="#" className="social">
+         
+          <a href="#" className="social" onClick={logGooglePopup}>
             <i className="fab fa-google-plus-g" />
           </a>
-          <a href="#" className="social">
-            <i className="fab fa-linkedin-in" />
-          </a>
+          
         </div>
         <span>or use your email for registration</span>
         <input

@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  
-  createUserDocumentFromAuth,
-  signInWithGooglePopup,
-} from "../utils/FireBase/firebase";
+import React from "react";
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
   const handleClick = (e) => {
@@ -13,11 +9,6 @@ const NavBar = () => {
     }, 1000);
   };
 
-  const logGooglePopup = async () => {
-    const response = await signInWithGooglePopup();
-    
-    const userDocRef= await createUserDocumentFromAuth(response.user)
-  };
   return (
     <div
       className="w-full h-16 bg-[#ffd13d] fixed p-2 flex justify-between items-center"
@@ -27,14 +18,15 @@ const NavBar = () => {
       }}
     >
       <h1 className="font-SpaceMono text-3xl">
-        <a href="#">Logo</a>
+        <Link to='/home'>
+        Logo
+        </Link>
       </h1>
       <input
         type="text"
         className="w-1/2 h-10 rounded-md outline-yellow-300 pl-4"
         placeholder="Search your items..."
       />
-      <button onClick={logGooglePopup}>Sign In with Google</button>
       <div className="flex w-40 pr-4 text-xl font-SpaceMono justify-between items-center">
         <h1>Account</h1>
         <h1 onClick={handleClick}>
