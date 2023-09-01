@@ -82,7 +82,7 @@ const SignUp = () => {
                 >
                   <img
                     className="w-7 mr-2"
-                    src="public/icons8-google.svg"
+                    src="https://developer.android.com/static/images/logos/google-developer-logomark-color-square-1000-1000.png"
                     alt=""
                   />
                   Sign up with Google
