@@ -4,6 +4,7 @@ import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import ProductList from "./components/Screen/ProductList.screen";
 import { BarLoader } from "react-spinners";
 import Authentication from "./components/Screen/Authentication.screen";
+import SignIn from "./components/SignIn.component";
 
 const App = () => {
   const [loading,setLoading]=useState(true)
@@ -37,6 +38,7 @@ const App = () => {
           <Route exact path="/" element={<Authentication/>}></Route>
           <Route exact path="/home" element={<Home />}></Route>
           <Route exact path="/home/category/:title" element={<ProductList />}></Route>
+          <Route exact path="/sign-in" element={<SignIn/>}></Route>
         </Routes>
         </div>
         }
