@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
   signInWithGooglePopup,
 } from "../utils/FireBase/firebase";
+import { toast } from "react-toastify";
 
 const defaultFormFields = {
   displayName: "",
@@ -16,41 +17,44 @@ const defaultFormFields = {
 
 const SignUp = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const [termsCondition, setTermsCondition] = useState(false);
 
   const { displayName, email, password, confirmPassword, condition } =
     formFields;
 
-  const logGooglePopup =async () => {
-    const response = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(response.user)
+  const logGooglePopup = async () => {
+    try{
+
+      const response = await signInWithGooglePopup();
+      await createUserDocumentFromAuth(response.user);
+      toast.success('Login success')
+    }catch(error){
+      toast.warn(error.code)
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password != confirmPassword) {
-      alert("Passsword do not match");
+      toast.warning("Password do not match");
       return;
     }
-    console.log("Terms Conditon :", termsCondition);
-    if (termsCondition === false) {
-      alert("Accept the terms and conditions...");
-    } else {
-      try {
-        const response = await createAuthUserWithEmailAndPassword(
-          email,
-          password
-        );
-        await createUserDocumentFromAuth(response.user, { displayName });
-        console.log("Data stored");
-        setFormFields(defaultFormFields);
-        console.log("Form reseted");
-      } catch (error) {
-        if (error.code == "auth/email-already-in-use") {
-          alert("Cannod create user , already in use...!");
-        } else {
-          console.log("error: User encounter  ", error);
-        }
+
+    try {
+      const response = await createAuthUserWithEmailAndPassword(
+        email,
+        password
+      );
+      await createUserDocumentFromAuth(response.user, { displayName });
+      console.log("Data stored", response.user);
+
+      setFormFields(defaultFormFields);
+      console.log("Form reseted");
+      toast.success("Account created successfully...");
+    } catch (error) {
+      if (error.code == "auth/email-already-in-use") {
+        toast.warning("email already in use");
+      } else {
+        console.log("error: User encounter  ", error);
       }
     }
   };
@@ -63,7 +67,6 @@ const SignUp = () => {
     <div>
       <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <div></div>
           <a
             href="#"
             className="flex items-center mb-6 text-3xl font-semibold text-gray-900 dark:text-white"
@@ -75,14 +78,14 @@ const SignUp = () => {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Create and account
               </h1>
-              <div>
+              <div className="border-b-2 h-16">
                 <div
                   className="flex flex-row items-center border-4 h-10 w-48 justify-center rounded-xl"
                   onClick={logGooglePopup}
                 >
                   <img
                     className="w-7 mr-2"
-                    src="public/icons8-google.svg"
+                    src="https://developer.android.com/static/images/logos/google-developer-logomark-color-square-1000-1000.png"
                     alt=""
                   />
                   Sign up with Google
@@ -102,7 +105,7 @@ const SignUp = () => {
                     id="displayName"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="username..."
-                    required=""
+                    required
                     value={displayName}
                     onChange={handleChange}
                   />
@@ -120,7 +123,7 @@ const SignUp = () => {
                     id="email"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@company.com"
-                    required=""
+                    required
                     value={email}
                     onChange={handleChange}
                   />
@@ -138,7 +141,7 @@ const SignUp = () => {
                     id="password"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required=""
+                    required
                     value={password}
                     onChange={handleChange}
                   />
@@ -156,7 +159,7 @@ const SignUp = () => {
                     id="confirm-password"
                     placeholder="••••••••"
                     className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required=""
+                    required
                     value={confirmPassword}
                     onChange={handleChange}
                   />
@@ -168,10 +171,7 @@ const SignUp = () => {
                       aria-describedby="terms"
                       type="checkbox"
                       className=" w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                      required=""
-                      onChange={(e) => {
-                        setTermsCondition(e.target.checked);
-                      }}
+                      required
                       value={condition}
                     />
                   </div>
@@ -198,12 +198,9 @@ const SignUp = () => {
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                   Already have an account?{" "}
-                  <a
-                    href="#"
-                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                  >
+                  <span className="font-medium text-primary-600 hover:underline dark:text-primary-500">
                     <Link to="/sign-in">Login here</Link>
-                  </a>
+                  </span>
                 </p>
               </form>
             </div>

@@ -3,19 +3,19 @@ import Home from "./components/Screen/Home.screen";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import ProductList from "./components/Screen/ProductList.screen";
 import { BarLoader } from "react-spinners";
-import Authentication from "./components/Screen/Authentication.screen";
 import SignIn from "./components/SignIn.component";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import SignUp from "./components/SignUp.component";
 
 const App = () => {
-  const [loading,setLoading]=useState(true)
-  
-   setTimeout(() => {
-    setLoading(false)
-  }, 1000);
-  const navigate=useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [getEmail, setGetEmail] = useState(localStorage.getItem("emailData"));
 
-  useEffect(()=>{
-  })
+  setTimeout(() => {
+    setLoading(false);
+  }, 1000);
+
   return (
     <div>
       <Suspense
@@ -25,23 +25,44 @@ const App = () => {
           </div>
         }
       >
-        {
-          loading ?  <div className="h-screen w-full flex items-center justify-center">
-          <BarLoader color="#f6c400" height={4} />
-        </div>
-        :
-        <div>
+        {loading ? (
+          <div className="h-screen w-full flex items-center justify-center">
+            <BarLoader color="#f6c400" height={4} />
+          </div>
+        ) : (
+          <div>
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              limit={2}
+              hideProgressBar={false}
+              newestOnTop
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover={false}
+              theme="light"
+            />
 
-        
-        <Routes>
-          
-          <Route exact path="/" element={<Authentication/>}></Route>
-          <Route exact path="/home" element={<Home />}></Route>
-          <Route exact path="/home/category/:title" element={<ProductList />}></Route>
-          <Route exact path="/sign-in" element={<SignIn/>}></Route>
-        </Routes>
-        </div>
-        }
+            <Routes>
+              <Route exact path="/home" element={<Home />}></Route>
+
+              <Route
+                exact
+                path="/home/category/:title"
+                element={<ProductList />}
+              ></Route>
+
+              <Route
+                exact
+                path="/sign-in"
+                element={<SignIn fun={setGetEmail} />}
+              ></Route>
+              <Route path="/" element={<SignUp fun={setGetEmail} />}></Route>
+            </Routes>
+          </div>
+        )}
       </Suspense>
     </div>
   );

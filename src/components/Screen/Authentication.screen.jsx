@@ -5,7 +5,7 @@ import SignUp from "../SignUp.component";
 const Authentication = () => {
   return (
     <div>
-      {/* <SignIn/> */}
+      
       <SignUp/>
     </div>
   );
