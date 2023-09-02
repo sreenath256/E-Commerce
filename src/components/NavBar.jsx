@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from 'react-router-dom';
+import { UserContext } from "../contexts/user.context";
+
+import { getAuth, signOut } from "firebase/auth";
 
 const NavBar = () => {
+  const {currentUser}=useContext(UserContext)
+  console.log("From navbar",currentUser);
   const handleClick = (e) => {
     e.target.classList.toggle("fa-bounce");
     setTimeout(() => {
       e.target.classList.remove("fa-bounce");
     }, 1000);
   };
+
+
+const auth = getAuth();
+
 
   return (
     <div
@@ -28,7 +37,13 @@ const NavBar = () => {
         placeholder="Search your items..."
       />
       <div className="flex w-40 pr-4 text-xl font-SpaceMono justify-between items-center">
-        <h1>Account</h1>
+        <h1 onClick={()=>{
+          signOut(auth).then(() => {
+            // Sign-out successful.
+          }).catch((error) => {
+            // An error happened.
+          });
+        }}>Account</h1>
         <h1 onClick={handleClick}>
           <i
             className="fa-solid fa-cart-shopping  fa-lg"

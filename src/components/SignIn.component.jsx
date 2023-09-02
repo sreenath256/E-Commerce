@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState,useContext } from "react";
+import { Link } from "react-router-dom";
 import {
   createUserDocumentFromAuth,
   signInWithGooglePopup,
   signInAuthUserWithEmailAndPassword,
 } from "../utils/FireBase/firebase";
 import { toast } from "react-toastify";
+import { UserContext } from "../contexts/user.context";
 
 const defaultFormFields = {
   email: "",
@@ -16,6 +17,8 @@ const SignIn = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
 
   const { email, password } = formFields;
+
+  const {currentUser,setCurrentUser}=useContext(UserContext)
 
   const signInWithGoogle = async () => {
     try {
@@ -32,14 +35,15 @@ const SignIn = () => {
 
     try {
       setFormFields(defaultFormFields);
-      const response = await signInAuthUserWithEmailAndPassword(
+      const {user} = await signInAuthUserWithEmailAndPassword(
         email,
         password
       );
-      console.log(response);
+      setCurrentUser(user)
+      console.log(user);
       toast.success("Login success");
     } catch (error) {
-      console.log("Error while logging in ", error.code);
+      console.log("Error while logging in ", error);
       toast.warning(error.code);
     }
   };
@@ -124,6 +128,9 @@ const SignIn = () => {
                   <a
                     href="#"
                     className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+                    onClick={()=>{
+                      console.log("Current-User",currentUser);
+                    }}
                   >
                     Forgot password?
                   </a>
@@ -137,7 +144,7 @@ const SignIn = () => {
                 </button>
                 <div className="border-y-2 h-16 flex items-center">
                   <div
-                    className="flex flex-row items-center border-4 h-10 w-48 justify-center rounded-xl"
+                    className="cursor-pointer flex flex-row items-center border-4 h-10 w-48 justify-center rounded-xl"
                     onClick={signInWithGoogle}
                   >
                     <img

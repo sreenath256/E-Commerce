@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useContext} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   createAuthUserWithEmailAndPassword,
@@ -6,6 +6,7 @@ import {
   signInWithGooglePopup,
 } from "../utils/FireBase/firebase";
 import { toast } from "react-toastify";
+import { UserContext } from "../contexts/user.context";
 
 const defaultFormFields = {
   displayName: "",
@@ -20,6 +21,7 @@ const SignUp = () => {
 
   const { displayName, email, password, confirmPassword, condition } =
     formFields;
+  const {setCurrentUser,currentUser}=useContext(UserContext)
 
   const logGooglePopup = async () => {
     try{
@@ -40,12 +42,14 @@ const SignUp = () => {
     }
 
     try {
-      const response = await createAuthUserWithEmailAndPassword(
+      const {user} = await createAuthUserWithEmailAndPassword(
         email,
         password
       );
-      await createUserDocumentFromAuth(response.user, { displayName });
-      console.log("Data stored", response.user);
+      await createUserDocumentFromAuth(user, { displayName });
+      setCurrentUser(user)
+      console.log("Current user: ",currentUser);
+      console.log("Data stored", user);
 
       setFormFields(defaultFormFields);
       console.log("Form reseted");
@@ -80,7 +84,7 @@ const SignUp = () => {
               </h1>
               <div className="border-b-2 h-16">
                 <div
-                  className="flex flex-row items-center border-4 h-10 w-48 justify-center rounded-xl"
+                  className="flex flex-row items-center border-4 h-10 w-48 justify-center rounded-xl cursor-pointer"
                   onClick={logGooglePopup}
                 >
                   <img
@@ -181,12 +185,14 @@ const SignUp = () => {
                       className="font-light text-gray-500 dark:text-gray-300"
                     >
                       I accept the{" "}
-                      <a
+                      <span
                         className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                         href="#"
                       >
+                        <Link to="/home">
                         Terms and Conditions
-                      </a>
+                        </Link>
+                      </span>
                     </label>
                   </div>
                 </div>
