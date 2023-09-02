@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
 import { UserContext } from "../contexts/user.context";
 
 import { getAuth, signOut } from "firebase/auth";
@@ -16,6 +16,7 @@ const NavBar = () => {
 
 
 const auth = getAuth();
+const  navigate=useNavigate()
 
 
   return (
@@ -39,11 +40,12 @@ const auth = getAuth();
       <div className="flex w-40 pr-4 text-xl font-SpaceMono justify-between items-center">
         <h1 onClick={()=>{
           signOut(auth).then(() => {
+            navigate('/')
             // Sign-out successful.
           }).catch((error) => {
             // An error happened.
           });
-        }}>Account</h1>
+        }}>Logout</h1>
         <h1 onClick={handleClick}>
           <i
             className="fa-solid fa-cart-shopping  fa-lg"

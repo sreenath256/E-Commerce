@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import {
   createUserDocumentFromAuth,
   signInWithGooglePopup,
@@ -7,6 +7,7 @@ import {
 } from "../utils/FireBase/firebase";
 import { toast } from "react-toastify";
 import { UserContext } from "../contexts/user.context";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const defaultFormFields = {
   email: "",
@@ -19,6 +20,7 @@ const SignIn = () => {
   const { email, password } = formFields;
 
   const {currentUser,setCurrentUser}=useContext(UserContext)
+  const navigate= useNavigate()
 
   const signInWithGoogle = async () => {
     try {
@@ -47,6 +49,20 @@ const SignIn = () => {
       toast.warning(error.code);
     }
   };
+
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("Logged in");
+      navigate("/home")
+      // ...
+    } else {
+      // User is signed out
+      // ...
+      
+      console.log("User is signed out");
+    }
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;

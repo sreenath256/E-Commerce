@@ -7,24 +7,33 @@ import SignIn from "./components/SignIn.component";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SignUp from "./components/SignUp.component";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [getEmail, setGetEmail] = useState(localStorage.getItem("emailData"));
+  const [flag, setFlag] = useState(false);
 
   setTimeout(() => {
     setLoading(false);
   }, 1000);
 
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setFlag(true);
+      // ...
+    } else {
+      // User is signed out
+      setFlag(false);
+
+      console.log("User is signed out");
+    }
+  });
+
   return (
     <div>
-      <Suspense
-        fallback={
-          <div className="h-screen w-full flex items-center justify-center">
-            <BarLoader color="#f6c400" height={4} />
-          </div>
-        }
-      >
+      
         {loading ? (
           <div className="h-screen w-full flex items-center justify-center">
             <BarLoader color="#f6c400" height={4} />
@@ -46,24 +55,27 @@ const App = () => {
             />
 
             <Routes>
-              <Route exact path="/home" element={<Home />}></Route>
-
+              {flag ? (
+                <Route  path="/home" element={<Home />}></Route>
+              ) : (
+                <Route exact path="/" element={<SignUp fun={setGetEmail} />}></Route>
+              )}
+              <Route path="*" element={<h1>404 not found</h1>}></Route>
               <Route
-                exact
+                
                 path="/home/category/:title"
                 element={<ProductList />}
               ></Route>
 
               <Route
-                exact
+                
                 path="/sign-in"
                 element={<SignIn fun={setGetEmail} />}
               ></Route>
-              <Route path="/" element={<SignUp fun={setGetEmail} />}></Route>
             </Routes>
           </div>
         )}
-      </Suspense>
+      
     </div>
   );
 };

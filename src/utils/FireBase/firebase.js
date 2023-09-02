@@ -50,8 +50,8 @@ export const createUserDocumentFromAuth = async (userAuth,additionalInfo={}) => 
       await setDoc(userDocRef, {
         "displayName": displayName,
         'email': email,
-        "created time": createAt,
-        "profile image": photoURL,
+        "createdTime": createAt,
+        "profileImage": photoURL,
         ...additionalInfo
       });
     } catch (error) {

@@ -7,6 +7,7 @@ import {
 } from "../utils/FireBase/firebase";
 import { toast } from "react-toastify";
 import { UserContext } from "../contexts/user.context";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const defaultFormFields = {
   displayName: "",
@@ -22,6 +23,8 @@ const SignUp = () => {
   const { displayName, email, password, confirmPassword, condition } =
     formFields;
   const {setCurrentUser,currentUser}=useContext(UserContext)
+
+  const navigate=useNavigate()
 
   const logGooglePopup = async () => {
     try{
@@ -62,6 +65,20 @@ const SignUp = () => {
       }
     }
   };
+
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("Logged in");
+      navigate("/home")
+      // ...
+    } else {
+      // User is signed out
+      // ...
+      
+      console.log("User is signed out");
+    }
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
