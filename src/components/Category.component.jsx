@@ -12,7 +12,7 @@ const Category = (props) => {
       }}
     >
       <div className=" w-1/3 h-2/3 md:w-full flex justify-center overflow-hidden">
-        <img className="w-full object-contain md:hover:scale-110  duration-1000 " src={url} alt="" />
+        <img className="w-full object-contain md:hover:scale-110 duration-1000 " src={url} alt="" />
       </div>
       <div className="w-64 h-full md:h-1/3 flex flex-col justify-center items-center text-center  ">
         <div className="mt-5 w-full md:border-t-2 flex flex-col justify-center items-start md:items-center">

@@ -1,4 +1,4 @@
-import React, { useState ,useContext} from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   createAuthUserWithEmailAndPassword,
@@ -6,8 +6,7 @@ import {
   signInWithGooglePopup,
 } from "../utils/FireBase/firebase";
 import { toast } from "react-toastify";
-import { UserContext } from "../contexts/user.context";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 
 const defaultFormFields = {
   displayName: "",
@@ -22,18 +21,16 @@ const SignUp = () => {
 
   const { displayName, email, password, confirmPassword, condition } =
     formFields;
-  const {setCurrentUser,currentUser}=useContext(UserContext)
-
-  const navigate=useNavigate()
+  
+  const navigate = useNavigate();
 
   const logGooglePopup = async () => {
-    try{
-
-      const response = await signInWithGooglePopup();
-      await createUserDocumentFromAuth(response.user);
-      toast.success('Login success')
-    }catch(error){
-      toast.warn(error.code)
+    try {
+      await signInWithGooglePopup();
+      
+      toast.success("Login success");
+    } catch (error) {
+      toast.warn(error.code);
     }
   };
 
@@ -45,14 +42,14 @@ const SignUp = () => {
     }
 
     try {
-      const {user} = await createAuthUserWithEmailAndPassword(
+      const { user } = await createAuthUserWithEmailAndPassword(
         email,
         password
       );
       await createUserDocumentFromAuth(user, { displayName });
-      setCurrentUser(user)
-      console.log("Current user: ",currentUser);
-      console.log("Data stored", user);
+      
+     
+      console.log("Data stored");
 
       setFormFields(defaultFormFields);
       console.log("Form reseted");
@@ -66,19 +63,20 @@ const SignUp = () => {
     }
   };
 
-  const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log("Logged in");
-      navigate("/home")
-      // ...
-    } else {
-      // User is signed out
-      // ...
-      
-      console.log("User is signed out");
-    }
-  });
+  // onAuthStateChanged(auth, (user) => {
+  //   if (user) {
+  //     console.log("Logged in");
+  //     navigate("/home")
+  //     // ...
+  //   } else {
+  //     // User is signed out
+  //     // ...
+
+  //     console.log("User is signed out");
+  //   }
+  // });
+
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -206,9 +204,7 @@ const SignUp = () => {
                         className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                         href="#"
                       >
-                        <Link to="/home">
-                        Terms and Conditions
-                        </Link>
+                        <Link to="/home">Terms and Conditions</Link>
                       </span>
                     </label>
                   </div>

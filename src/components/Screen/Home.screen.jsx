@@ -3,12 +3,10 @@ import Category from "../Category.component";
 import Banner from "../Banner.component";
 import { categories } from "../../assets/categoryList";
 import NavBar from "./../NavBar";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const Home = () => {
 
-  const {currentUser} = getAuth()
-  console.log(currentUser);
+  
 
   return (
     <div>

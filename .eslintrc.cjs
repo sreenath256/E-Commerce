@@ -16,5 +16,11 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: "file-loader",
+          },
+        ]
   },
 }

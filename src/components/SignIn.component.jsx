@@ -1,13 +1,13 @@
-import React, { useEffect, useState,useContext } from "react";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import React, {  useState,useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   createUserDocumentFromAuth,
   signInWithGooglePopup,
   signInAuthUserWithEmailAndPassword,
+  
 } from "../utils/FireBase/firebase";
 import { toast } from "react-toastify";
 import { UserContext } from "../contexts/user.context";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const defaultFormFields = {
   email: "",
@@ -19,13 +19,12 @@ const SignIn = () => {
 
   const { email, password } = formFields;
 
-  const {currentUser,setCurrentUser}=useContext(UserContext)
   const navigate= useNavigate()
 
   const signInWithGoogle = async () => {
     try {
-      const response = await signInWithGooglePopup();
-      await createUserDocumentFromAuth(response.user);
+      await signInWithGooglePopup();
+      
       toast.success("Login success");
     } catch (error) {
       toast.warn(error.code)
@@ -41,8 +40,9 @@ const SignIn = () => {
         email,
         password
       );
-      setCurrentUser(user)
-      console.log(user);
+      
+      
+      
       toast.success("Login success");
     } catch (error) {
       console.log("Error while logging in ", error);
@@ -50,19 +50,8 @@ const SignIn = () => {
     }
   };
 
-  const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log("Logged in");
-      navigate("/home")
-      // ...
-    } else {
-      // User is signed out
-      // ...
-      
-      console.log("User is signed out");
-    }
-  });
+  
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -144,9 +133,7 @@ const SignIn = () => {
                   <a
                     href="#"
                     className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-                    onClick={()=>{
-                      console.log("Current-User",currentUser);
-                    }}
+                   
                   >
                     Forgot password?
                   </a>
