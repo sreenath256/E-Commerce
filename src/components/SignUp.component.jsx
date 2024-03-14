@@ -27,8 +27,8 @@ const SignUp = () => {
   const logGooglePopup = async () => {
     try {
       await signInWithGooglePopup();
-      
       toast.success("Login success");
+      navigate('/home')
     } catch (error) {
       toast.warn(error.code);
     }
